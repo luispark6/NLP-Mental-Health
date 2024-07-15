@@ -1,4 +1,2 @@
 # Overview
-This project contains the full architecture of a Transformer based Large Languae Model. The model was built
-with pytorch. Furthermore, the model was tested on a Mental Health Dataset that contains two thousand 
-client-psychologist interactions. Although 
+This project showcases the complete architecture of a Transformer-based Large Language Model, developed using PyTorch. The model was evaluated using a Mental Health Dataset, which includes two thousand client-psychologist interactions. It is important to note that this testing was not aimed at mimicking the pretraining of a base Transformer model, as the available hardware would not support such an extensive task. Additionally, the dataset used is not suitable for pretraining, which typically involves unsupervised learning on much larger datasets. This project was undertaken solely for self-learning purposes and was not intended to create a full-scale model.
