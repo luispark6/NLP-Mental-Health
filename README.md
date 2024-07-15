@@ -30,7 +30,8 @@ The matrix is then passed into another Add and Norm component. This new matrix i
 In the "Attention is All You Need" paper, each encoder block constitutes one iteration in a series. The output from each encoder block serves as the input for the next block, a process repeated typically eight times. This stacking is crucial because each encoder block can extract varying levels of abstraction from the input data. By sequentially layering multiple blocks, the model effectively captures progressively intricate patterns and relationships within the data.
 
 ### Visual
-![Alt text](relative%20encoder.png?raw=true "Title")
+![alt text](https://github.com/luispark6/NLP-Mental-Health/blob/main/encoder.png?raw=true)
+
 
 
 
