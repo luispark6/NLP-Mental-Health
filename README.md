@@ -22,16 +22,41 @@ A single Attention head is insufficient for capturing all contextual embeddings 
 ### Concatenate
 After all partitioned matrices undergo the Attention mechanism independently, the matrices are concatenated to its original embedding dimensions. 
 
-### Linear Layer, Add and Norm, Feedforward
+### Linear Layer, Add and Norm, Feed-Forward
 After concatenation, the matrix is processed through a Linear Layer followed by an Add and Norm component. Adding the original embeddings preserves their linguistic characteristics, while normalizing each feature dimension accelerates convergence. Post Add and Norm, the matrix enters a feed-forward network. This step allows the model to grasp nonlinear transformations necessary for predicting future tokens based on the embeddings' evolving representation. 
 The matrix is then passed into another Add and Norm component. This new matrix is now regarded as the output of the Encoder Block.
 
 ### Encoder Blocks
 In the "Attention is All You Need" paper, each encoder block constitutes one iteration in a series. The output from each encoder block serves as the input for the next block, a process repeated typically eight times. This stacking is crucial because each encoder block can extract varying levels of abstraction from the input data. By sequentially layering multiple blocks, the model effectively captures progressively intricate patterns and relationships within the data.
 
-### Visual
+### Encoder Visual
 ![alt text](https://github.com/luispark6/NLP-Mental-Health/blob/main/encoder.png?raw=true)
 
+# Decoder(Training)
+### Input Embedding, Positional Encoding
+Feed the expected output sentence into the input embedding and positional encoding components for the same reason we process the input sentence in this manner.
 
+### Masked Multi-Head Attention
+Now that we have embeddings for the output sentence, they are passed through masked multi-head attention. The masking aspect prevents words from accessing context from future words. This is crucial because during inference, the model cannot peek ahead to obtain context for words it hasn't generated yet, given its autoregressive nature. Therefore, during training, we enforce that words can only access context from preceding words. To achieve this, after calculating the cosine similarity between the query and value, we zero out embeddings corresponding to future positions. Other than the masking, this Multi-Head Attention operates exactly the same as the Multi-Head Attention in the encoder.
 
+### Add and Norm
+Simply apply Add and Norm to the matrix after the Masked Multi-Head Attention.
 
+### Multi-Head Attention
+We now pass the matrix to a new multi-head attention component, which operates slightly differently from other attention blocks. This component retrieves the output of the encoder, which includes embeddings for each word in the input sentence enriched with linguistic features, positional information, and overall sentence context. This encoder output serves both as the key and value for the attention block.
+
+Initially, we compute cosine similarity between the expected output (from the decoder block) and the encoder output. This results in a matrix indicating how similar each word in the expected decoder output is to the encoder's output. We then multiply this similarity matrix with the value matrix, producing a new matrix that retains parts of the encoder's output embeddings. Importantly, this new matrix excludes embeddings from the expected decoder output, preserving only contextual information derived from the encoder's output.
+
+The purpose of this Multi-Head Attention is to create a context embedding matrix of the encoder output based on the expected output of the decoder.
+
+### Add and Norm
+We apply an Add and Norm operation to the new matrix. This step is crucial because, as mentioned earlier, the new matrix does not contain embeddings from the expected decoder output. Including these embeddings is essential to preserve the original meanings intended by the decoder. This straightforward process restores the embeddings and ensures the decoder's output retains its intended semantic content.
+
+### Feed Forward and Add and Norm
+Pass the matrix into a Feed Forward Network for non-linear learning, then perform an Add and Norm.
+
+### Linear Layer
+Finally, pass the matrix through a linear layer where the output dimensions match the size of the dictionary. Each output node in this layer corresponds to a token, and our goal is for the decoder to activate the proper tokens/words.
+
+### Decoder Visual
+![alt text](https://github.com/luispark6/NLP-Mental-Health/blob/main/decoder.png?raw=true)
