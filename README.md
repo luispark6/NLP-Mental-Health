@@ -1,6 +1,9 @@
 # Overview
-This project showcases the complete architecture of a Transformer-based Large Language Model, developed using PyTorch. The model was evaluated using a Mental Health Dataset, which includes two thousand client-psychologist interactions. It is important to note that this testing was not aimed at mimicking the pretraining of a base Transformer model, as my available hardware would not support such an extensive task. Additionally, the dataset used is not suitable for pretraining, which typically involves unsupervised learning on much larger datasets. This project was undertaken solely for self-learning purposes and was not intended to create a full-scale model. Below, I will outline the key insights I gained from each component of the Transformer during the implementation of the model.
+This project showcases the complete architecture of a Transformer-based Large Language Model, developed using PyTorch. The model was evaluated using a Mental Health Dataset, which includes two thousand client-psychologist interactions. It is important to note that this testing was not aimed at mimicking the pretraining of a base Transformer model, as my available hardware would not support such an extensive task. Additionally, the dataset used is not suitable for pretraining, which typically involves unsupervised learning on much larger datasets. This project was undertaken solely for self-learning purposes and was not intended to create a full-scale model. 
 
+Please note the file named InputEmbeddings.ipynb was originally intended as an N-Gram model for use as the word2vec method in my Transformer. I later realized that training the word2vec model directly with the Transformer was more appropriate, which I did implement in the transformer.ipynb file. So the InputEmbedding model was not used at all in the Transformer architecture.
+
+Below, I will outline the key insights I gained from each component of the Transformer during the implementation of the model.
 
 # Encoder
 ### Tokenizing and Embedding
@@ -60,3 +63,7 @@ Finally, pass the matrix through a linear layer where the output dimensions matc
 
 ### Decoder Visual
 ![alt text](https://github.com/luispark6/NLP-Mental-Health/blob/main/decoder.png?raw=true)
+
+
+# Full Transformer Diagram
+![alt text](https://github.com/luispark6/NLP-Mental-Health/blob/main/full.png?raw=true)
